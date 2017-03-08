@@ -1,4 +1,4 @@
-#**Traffic Sign Recognition Project ** 
+#*Traffic Sign Recognition Project *
 
 
 [//]: # (Image References)
@@ -7,7 +7,7 @@
 [image_freq_hist]: ./examples/my_writeup_images/hist1.png "Frequency Histogram"
 [image_new_images]: ./examples/my_writeup_images/new_images.png "New Images"
 [image_signs]: ./examples/my_writeup_images/signs.png "Traffic Signs"
-[image_softmax]: ./examples/my_writeup_images/epochs.png "Softmax Histogram"
+[image_softmax]: ./examples/my_writeup_images/softmax.png "Softmax Histogram"
 [image_placeholder]: ./examples/placeholder.png "Placeholder Image"
 [image_after_gs]: ./examples/my_writeup_images/after_gs.png "After Grayscaling"
 [image_before_gs]: ./examples/my_writeup_images/before_gs.png "Before Grayscaling"
@@ -95,31 +95,31 @@ The code for my final model is located in the 9th cell of the ipython notebook.
 
 My final model consisted of the following layers:
 
-Layer : 1
-1. 5x5 convolution (32x32x1 in, 28x28x6 out)
-2. ReLU
-3. Dropout with keep_prob 0.50 
-4. 2x2 max pool (28x28x6 in, 14x14x6 out)
+* Layer : 1
+ * 5x5 convolution (32x32x1 in, 28x28x6 out)
+ * ReLU
+ * Dropout with keep_prob 0.50 
+ * 2x2 max pool (28x28x6 in, 14x14x6 out)
 
-Layer : 2
-5. 5x5 convolution (14x14x6 in, 10x10x16 out)
-6. ReLU
-7. Dropout with keep_prob 0.50
-8. 2x2 max pool (10x10x16 in, 5x5x16 out)
-9. Flatten. Input = 5x5x16. Output = 400
+* Layer : 2
+ * 5x5 convolution (14x14x6 in, 10x10x16 out)
+ * ReLU
+ * Dropout with keep_prob 0.50
+ * 2x2 max pool (10x10x16 in, 5x5x16 out)
+ * Flatten. Input = 5x5x16. Output = 400
 
-Layer : 3
-10. Fully Connected. Input = 400. Output = 120
-11. ReLU
-12. Dropout with keep_prob 0.50 
+* Layer : 3
+ * Fully Connected. Input = 400. Output = 120
+ * ReLU
+ * Dropout with keep_prob 0.50 
 
-Layer : 4
-13. Fully Connected. Input = 120. Output = 84
-14. ReLU
-15. Dropout with keep_prob 0.50 
+* Layer : 4
+ * Fully Connected. Input = 120. Output = 84
+ * ReLU
+ * Dropout with keep_prob 0.50 
 
-Layer : 5
-16. Fully Connected. Input = 84. Output = 43.
+* Layer : 5
+ * Fully Connected. Input = 84. Output = 43.
 
 
 
@@ -140,10 +140,10 @@ I used __AdamOptimizer__ for optimization. Other settings I used are following.
 The code for calculating the accuracy of the model is located in the 12th cell of the Ipython notebook.
 
 I approach I used is following.
-1. Ran the model provided with LANET lab notebook with default parameters. (Validation Set Accuracy: 87%)
-2. Modified the model by adding dropouts after each layer (apart from the final layer) with keep_prob =0.50 (Validation set accuracy increased to 92%)
-3. Tried playing with the learning rate and batch size. (Froze them to the values specefied above.)
-4. Augmented training set with the synthetic images. (Validation set Accuracy: 95.5%)
+* Ran the model provided with LANET lab notebook with default parameters. (Validation Set Accuracy: 87%)
+* Modified the model by adding dropouts after each layer (apart from the final layer) with keep_prob =0.50 (Validation set accuracy increased to 92%)
+* Tried playing with the learning rate and batch size. (Froze them to the values specefied above.)
+* Augmented training set with the synthetic images. (Validation set Accuracy: 95.5%)
 
 With the above model I achieved the
 * Validation set Accuracy of 95.5%
