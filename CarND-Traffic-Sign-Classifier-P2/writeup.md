@@ -1,4 +1,4 @@
-#*Traffic Sign Recognition Project *
+#Traffic Sign Recognition Project
 
 
 [//]: # (Image References)
@@ -17,8 +17,9 @@
 
 ####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one. You can submit your writeup as markdown or pdf. You can use this template as a guide for writing the report. The submission includes the project code.
 
-I have used tensorflow version 1.0.0. I ran my code on GTX680 GPU.
 You're reading it! and here is a link to my [project code](https://github.com/rajesh-iiith/SelfDrivingCarNanodegree/blob/master/CarND-Traffic-Sign-Classifier-P2/Traffic_Sign_Classifier.ipynb)
+
+I have used tensorflow version 1.0.0. I ran my code on GTX680 GPU.
 
 ###Data Set Summary & Exploration
 
@@ -147,7 +148,7 @@ I approach I used is following.
 
 With the above model I achieved the
 * Validation set Accuracy of 95.5%
-* Test set Accuracy of 93.5%
+* Test set Accuracy of 93.2%
 
 
 ###Test a Model on New Images
