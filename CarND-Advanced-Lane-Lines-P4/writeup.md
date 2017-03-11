@@ -43,7 +43,7 @@ You're reading it!
 The code for this step is contained in the code cell number 2, 3 and 4 of the IPython notebook located in "experiments.ipynb".
 
 I undistorted the image as follows.
-1. *Making object points and image points*: _Object points_ are the (x, y, z) coordinates of the chessboard corners. In this case, chessboard is fixed on the (x, y) plane at z=0 and these object points will be the same for each calibration image.  
+* *Making object points and image points*: _Object points_ are the (x, y, z) coordinates of the chessboard corners. In this case, chessboard is fixed on the (x, y) plane at z=0 and these object points will be the same for each calibration image.  
 In the following code, `objp` is a replicated array of coordinates, and `objpoints` will be appended with a copy of it every time all chessboard corners in a test image is successfully detected.  `imgpoints` is appended with the (x, y) pixel position of each of the corners in the image plane with each successful chessboard detection.  
 
 ~~~
@@ -70,13 +70,13 @@ In the following code, `objp` is a replicated array of coordinates, and `objpoin
           objpoints.append(objp)
           imgpoints.append(corners)
 ~~~
-2. *Camera Caliberation*: We feed in objpoints and imgpoints into `cv2.calibrateCamera`. This gives us the camera matrix and distortion coefficients.
+* *Camera Caliberation*: We feed in objpoints and imgpoints into `cv2.calibrateCamera`. This gives us the camera matrix and distortion coefficients.
 
 ~~~
 ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objpoints, imgpoints, img_size, None, None)
 ~~~
 
-3. *Image Undistortion*: We then use `cv2.undistort` to get the undistorted image
+* *Image Undistortion*: We then use `cv2.undistort` to get the undistorted image
 
 ~~~
 undist = cv2.undistort(img, mtx, dist, None, mtx)
@@ -127,9 +127,11 @@ warped = cv2.warpPerspective(img, M, (image_shape[1], image_shape[0]), flags=cv2
 
 
 After masking the image looks like the following.
+
 ![alt text][image_masked]
 
 Once we apply perspective transform on the above image, it looks like following.
+
 ![alt text][image_warped]
 
 ####4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
@@ -150,6 +152,7 @@ right_fitx = right_fit[0]*ploty**2 + right_fit[1]*ploty + right_fit[2]
 `extract_pixel_positions` uses column oriented histogram to pind the peaks (hot region to look for). It then uses peak positions (bottom ones) as starting point and slides the search windows in the correct direction.
 
 After fitting the line to the pixel points, it looks like following.
+
 ![alt text][image_line_drawn]
 
 ####5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
@@ -167,9 +170,9 @@ centre = center(719, left_fit, right_fit)
 ####6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
 This is done using following steps.
-1. For this we first create an image to draw lines on, and draw the lane onto warped blank image. 
-2. Use inverse perspective transform matrix (Minv) to warp the blank back to original image.
-3. Combine the result with the original image.
+* For this we first create an image to draw lines on, and draw the lane onto warped blank image. 
+* Use inverse perspective transform matrix (Minv) to warp the blank back to original image.
+* Combine the result with the original image.
 
 ```
 # Create an image to draw the lines on
