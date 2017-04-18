@@ -138,6 +138,19 @@ I used __AdamOptimizer__ for optimization. Other settings I used are following.
 
 ####5. Describe the approach taken for finding a solution. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
+The traffic sign images are typically composed of basic geometrical shapes, and hance convolutional layers can be very effective in squeezing out the in the semantics of the image. Broadly speaking,  the CNN learns to recognize basic lines and curves, then shapes and blobs, and then increasingly complex objects within the image. Finally, the CNN classifies the image by combining the larger, more complex objects. 
+
+I have used two convolutional layers followed by three fully connected layers, where the length of output of last layer equals to the number of classes.We have seen in the LANET lab that this kind of an architecure works well for images in MNIST data set.
+
+For both the convolutional layers, the convolution is followed by ReLU (for adding non-Linearlity in the network in a simple way). ReLU is followed by dropout and maxpool.
+
+To sensibly reduce the spatial extent of feature map of the convolutional pyramid, rather than using stride of size two (which is aggressive), using 2x2 maxpooling is less agressive and preserves more info than aggresive striding. 
+
+To prevent overfitting, we use a dropout after every layer with keep_prob=.50. Because of random dropout, the network can not rely on any activation to be present, because they might be destroyed at any given moment. So, it is forced to learn a redundant representation of everything.
+
+Fully connected layers help in squeezing out the dimensions such that finally the length of the output of length of the class.
+
+
 The code for calculating the accuracy of the model is located in the 12th cell of the Ipython notebook.
 
 I approach I used is following.
@@ -178,7 +191,11 @@ Here are the results of the prediction:
 | Keep right		| Keep right      							|
 
 
-The model was able to correctly guess 5 of the 5 traffic signs, which gives an accuracy of 100%. This gives me confidence that the model does well on real life traffic signs. Further discussions on, with what confidence the predictions has been made, are made below (using softmax probabilities.) 
+The model was able to correctly guess 5 of the 5 traffic signs, which gives an accuracy of 100%. This gives me confidence that the model does well on real life traffic signs. Further discussions on, with what confidence the predictions has been made, are made in the nexe section (using softmax probabilities).
+
+If we compare this accuracy (100%) to with the test set accuracy (93.2 %), it seems to be performing better on newly acquired images. This might be due to the fact that number of images in the newly acquired image set is very low (only 5). Also, the model might be good at performing classification for these kind of images due to unknown factors such as adequate avilability of similar images in the training set. In spite of 100% accuracy on new images, I doubt that the model is overfitting to some extent, because test set accuracy is lower than the validation set accuracy.    
+
+
 
 ####3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction and identify where in your code softmax probabilities were outputted. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
