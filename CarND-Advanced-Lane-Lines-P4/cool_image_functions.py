@@ -183,14 +183,17 @@ def center(y, left_poly, right_poly):
     return center
 
 
-def write_data_on_image(img, curvature, vehicle_position):
+def write_data_on_image(img, left_curvature, right_curvature, curvature, vehicle_position):
 
     # Convert from pixels to meters
     vehicle_position = vehicle_position / 12800 * 3.7
-    curvature = curvature / 128 * 3.7
+    #curvature = curvature / 128 * 3.7
 
     font = cv2.FONT_HERSHEY_SIMPLEX
     cv2.putText(img, 'Radius of Curvature = %d(m)' % curvature, (50, 50), font, 1, (255, 255, 255), 2)
+    cv2.putText(img, 'Left Curvature = %d(m)' % left_curvature, (50, 150), font, 1, (255, 255, 255), 2)
+    cv2.putText(img, 'Right Curvature = %d(m)' % right_curvature, (50, 200), font, 1, (255, 255, 255), 2)
     left_or_right = "left" if vehicle_position < 0 else "right"
     cv2.putText(img, 'Vehicle is %.2fm %s of center' % (np.abs(vehicle_position), left_or_right), (50, 100), font, 1,
                 (255, 255, 255), 2)
+

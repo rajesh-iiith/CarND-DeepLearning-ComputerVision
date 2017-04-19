@@ -1,6 +1,9 @@
-##Advanced Lane Finding Project
+# Advanced Lane Finding
 
-The goals / steps of this project are the following:
+**Rajesh Kumar**
+##### 19 April 2017
+
+**Goals**:
 
 * Compute the camera calibration matrix and distortion coefficients given a set of chessboard images.
 * Apply a distortion correction to raw images.
@@ -24,9 +27,9 @@ The goals / steps of this project are the following:
 [video_output]: project_output_colour.mp4 "VideoOutput"
 
 ---
-###Writeup / README
+### Documentation 
 
-####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Advanced-Lane-Lines/blob/master/writeup.md) is a template writeup for this project you can use as a guide and a starting point.  
+#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Advanced-Lane-Lines/blob/master/writeup.md) is a template writeup for this project you can use as a guide and a starting point.  
 
 Important Files:
 
@@ -36,9 +39,9 @@ Important Files:
 
 
 You're reading it!
-###Camera Calibration
+### Camera Calibration
 
-####1. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.
+#### 1. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.
 
 The code for this step is contained in the code cell number 2, 3 and 4 of the IPython notebook located in "experiments.ipynb".
 
@@ -85,19 +88,19 @@ The final image looks like following before and after undistortion.
 
 ![alt text][image_undistorted_caliberation]
 
-###Pipeline (single images)
+### Pipeline (single images)
 
-####1. Provide an example of a distortion-corrected image.
+#### 1. Provide an example of a distortion-corrected image.
 When you apply distortion correction to image on the left (below), the undistorted image looks like following. We will use same image for further demonstrations.
 ![alt text][image_undistorted]
 
-####2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
+#### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 
 I used a combination of color and gradient thresholds to generate a binary image (see the function `apply_color_and_gradient_threshold` in `cool_image_functions.py`).  For this I convert the image to HLS space and I apply thresholds ro S color channel and x gradient. Here's an example of my output for this step. 
 
 ![alt text][image_processed]
 
-####3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
+#### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
 First I mask the image to just consider the useful area in the image. I then apply perspective transformation on the image to get birds-eye view of the lane lines. (See functions `mask_this_image` and `transform_perspective` in `cool_image_functions.py`)
 
@@ -134,7 +137,7 @@ Once we apply perspective transform on the above image, it looks like following.
 
 ![alt text][image_warped]
 
-####4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
+#### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
 We pass warped image to `extract_pixel_positions` function from `cool_image_functions.py` which returns pixel positions of left and right line.
 We use these left and right pixel positions to fit a polynomial with degree 2 (using `np.polyfit`). 
@@ -155,7 +158,7 @@ After fitting the line to the pixel points, it looks like following.
 
 ![alt text][image_line_drawn]
 
-####5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
+#### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
 This calculation is done using the coefficients of the 2nd degree polymomail drwan above. It is shown below.
 
@@ -167,7 +170,7 @@ curvature = (left_curverad + right_curverad) / 2
 centre = center(719, left_fit, right_fit)
 ```
 
-####6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
+#### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
 This is done using following steps.
 * For this we first create an image to draw lines on, and draw the lane onto warped blank image. 
@@ -200,9 +203,9 @@ The final image looks like following.
 
 ---
 
-###Pipeline (video)
+### Pipeline (video)
 
-####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
+#### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
 Converting the image pipeline to a video pipeline is simple. Here is how I did it.
 
@@ -216,14 +219,14 @@ Here's a [link to my video result](project_output_colour.mp4)
 
 ---
 
-###Discussion
+### Discussion
 
-####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
+#### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
 If there are not enough points on one or more of the lane lines, noise detection becomes difficult. 
 
 1. If we increase the min threshold of S value, number of points reduce even further, making line detection even more dificult.
-2. Reducing S value leads to a case where drawn line shows high curvature. See the following image. The bottom point where the sliding window statrs is slightly on the right (right line) and moves to slightly left (on the right line), leading to a high curvature.
+2. Reducing S value leads to a case where drawn line shows high curvature. See the following image. The bottom point where the sliding window starts is slightly on the right (right line) and moves to slightly left (on the right line), leading to a high curvature.
 ![alt text][image_hc]
 3. This implementation is slow, it doesn't take advantage of knowledge of previous frames to reduce time and accuracy (To be done in subsequent iterations.)
 4. Biggest issue is that, we can not totally rely on parameters to solve our problem, Solution to one frame causes problem to others. 
