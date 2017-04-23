@@ -3,6 +3,14 @@
 ***Rajesh Kumar***
 **23 April 2017**
 
+Project Code:
+
+[Helper: helper.py](https://github.com/rajesh-iiith/SelfDrivingCarNanodegree/blob/master/CarND-Vehicle-Detection-P5/helper.py)
+
+[Classifier: car_classifier.py](https://github.com/rajesh-iiith/SelfDrivingCarNanodegree/blob/master/CarND-Vehicle-Detection-P5/car_classifier.py)
+
+[Pipeline: pipeline.py](https://github.com/rajesh-iiith/SelfDrivingCarNanodegree/blob/master/CarND-Vehicle-Detection-P5/pipeline.py)
+
 
 ---
 
@@ -26,6 +34,8 @@
 ### Histogram of Oriented Gradients (HOG)
 
 #### 1. Explain how you extracted HOG features from the training images.
+
+***Code: helper.py [Function: ```get_hog_features```]***
 
 I used the ```hog``` method in ```skimage.feature``` package to extract HOG features. 
 
@@ -52,9 +62,12 @@ I summarize the pre-classification steps following.
 
 #### 2. Explain how you settled on your final choice of HOG parameters.
 
+***Code: car_classifier.py [Lines: 36-47]***
+
 With the goal of maximizing classifier accuracy, I tried parameter combinations for hog search. YCrCb color space lead to better classifier accuracy than other color spaces. I use all the three channels as the feature vectors. I ended up using 8x8 pixels for each cell and 2x2 cells in each block. The idea was to strike a good balance between computation heaviness and extraction of fairly strong feature set.
 
 #### 3. Describe how you trained a classifier using your selected HOG features (and color features if you used them).
+***Code: car_classifier.py [Lines: 49-103]***
 
 As mentioned earlier, I used a concatenation of three feature vectors. One is spatial binning to get the raw color info, second is using a histogram of the color spectrum to get color info, and third is the HOG features to get the shape info.
 
@@ -65,6 +78,8 @@ The total length of the feature vector in my case is 6108. Time taken to train m
 ### Sliding Window Search
 
 #### 1. Describe how you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
+
+***Code: pipeline.py [Function: ```find_cars```]***
 
 Sliding window search is implemented in ```find_cars``` function. It extracts hog features only once and then uses sub-sampling to get all of its overlaying windows. Each window is defined by a scaling factor where a scale of 1 would result in a window that's 8 x 8 cells then the overlap of each window is in terms of the cell distance. This means that a cells_per_step = 2 would result in a search window overlap of 75%.
 
@@ -79,6 +94,8 @@ Sliding window search is implemented in ```find_cars``` function. It extracts ho
 
 
 #### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
+***Code: pipeline.py [Function: ```process_image```]***
+
 
 Example Input image:
 ![Input][image_input]
@@ -95,10 +112,11 @@ For better performance, I did the following.
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
 
-Here's a [link to my video result](./project_video.mp4)
+Here's a [link to my video result](https://github.com/rajesh-iiith/SelfDrivingCarNanodegree/blob/master/CarND-Vehicle-Detection-P5/output.mp4)
 
 
-#### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
+#### 2. Describe how you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
+***Code: pipeline.py [Function: ```process_image```]***
 
 I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
 
